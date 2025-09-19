@@ -13,7 +13,10 @@ cat .env.example > .env.local
 
 # run project
 yarn dev
+
 ```
+
+> Note: To allow QR generation please put the IP local not localhost on .env file
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
