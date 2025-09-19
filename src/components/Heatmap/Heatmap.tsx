@@ -68,16 +68,18 @@ export const Heatmap = ({ warehouseId, onClick }: Props) => {
           <p className="text-">Click any bin to view detailed information</p>
         </div>
 
-        <Button variant="outline" size="lg" onClick={recompute}>
+        <Button
+          data-tour="recompute"
+          variant="outline"
+          size="lg"
+          onClick={recompute}
+        >
           <RefreshCcw className="w-3 h-3 mr-1" />
           Recompute
         </Button>
       </div>
       <Chart
         options={{
-          markers: {
-            onClick: () => console.log('asdasd'),
-          },
           chart: {
             height: 350,
             type: 'heatmap',
@@ -164,6 +166,7 @@ export const Heatmap = ({ warehouseId, onClick }: Props) => {
         }}
         series={series}
         type="heatmap"
+        data-tour="heatmap"
       />
     </div>
   );

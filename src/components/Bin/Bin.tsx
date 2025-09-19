@@ -1,7 +1,7 @@
 'use client';
 
 import { useBin } from '@/core/hooks/useBin';
-import { Activity, CheckCircle } from 'lucide-react';
+import { Activity } from 'lucide-react';
 import { Fallback } from '../Fallback';
 import {
   Card,
@@ -12,8 +12,10 @@ import {
 } from '../ui/card';
 import { BinSkeleton } from './Skeleton';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { Activities } from '../Activities/Activities';
+import { AuditAlert } from '../Audit/Alert';
 import { Button } from '../ui/button';
 import { BinDetails } from './BinDetails';
 import { BinFactor } from './BinFactor';
@@ -24,7 +26,11 @@ interface Props {
 
 export const Bin = ({ binCode }: Props) => {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
   const { isLoading, isError, bin } = useBin(binCode);
+
+  // toggle modal
+  const toggleActivities = () => setIsOpen((p) => !p);
 
   if (!binCode) {
     return (
@@ -67,12 +73,12 @@ export const Bin = ({ binCode }: Props) => {
       <CardContent className="h-full">
         <div className="space-y-6">
           <BinDetails
-              aisleCode={bin.rack.aisle.code}
-              rackNumber={bin.rack.number}
-              riskScore={bin.risk_score}
-              lastAuditDate={bin.last_audit_date}
-              pallets={bin.pallet_count}
-            />
+            aisleCode={bin.rack.aisle.code}
+            rackNumber={bin.rack.number}
+            riskScore={bin.risk_score}
+            lastAuditDate={bin.last_audit_date}
+            pallets={bin.pallet_count}
+          />
 
           <div className="space-y-3">
             <h5 className="font-bold">Risk Factors Analysis</h5>
@@ -82,14 +88,26 @@ export const Bin = ({ binCode }: Props) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Link href={`${pathname}/audit?binCode=${binCode}`} className="w-full">
-          <Button className="w-full">
-            <CheckCircle />
-            Audit Bin
+      <CardFooter className="grid-cols-3 gap-2 grid w-full">
+        <div className="">
+          <Button size="full" variant="outline" onClick={toggleActivities}>
+            <Activity />
+            Logs
           </Button>
-        </Link>
+        </div>
+
+        <AuditAlert
+          url={`${pathname}/audit?binCode=${binCode}`}
+          label="Audit"
+        />
       </CardFooter>
+
+      <Activities
+        binId={bin.id}
+        isOpen={isOpen}
+        binCode={binCode}
+        onCloseOpen={toggleActivities}
+      />
     </Card>
   );
 };

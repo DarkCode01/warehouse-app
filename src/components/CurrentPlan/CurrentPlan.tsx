@@ -1,12 +1,11 @@
 'use client'
 
 import { useActivePlan } from "@/core/hooks/audit-plan/useActivePlan";
-import { countTasksCompleted } from "@/lib/tasks";
-import Link from "next/link";
+import { countTasksCompleted } from '@/lib/tasks';
 import { usePathname } from "next/navigation";
 import { HTMLAttributes, useMemo } from "react";
-import { Fallback } from "../Fallback";
-import { Button } from "../ui/button";
+import { AuditAlert } from '../Audit/Alert';
+import { Fallback } from '../Fallback';
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Progress } from "../ui/progress";
 import { Empty } from "./Empyt";
@@ -30,10 +29,10 @@ export const CurrentPlan = ({ warehouseId }: Props) => {
       message="Unable to retrieve your active audit schedule. "
     />
   );
-  if (!plan) return <Empty />;
+  if (!plan?.id) return <Empty />;
 
   return (
-    <Card>
+    <Card data-tour="current-plan" className="sticky top-0">
       <CardHeader>
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Current Audit Plan
@@ -62,9 +61,10 @@ export const CurrentPlan = ({ warehouseId }: Props) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Link href={`${pathname}/audit?planId=${plan.id}`} className="w-full">
-          <Button size="full">Continue Audit</Button>
-        </Link>
+        <AuditAlert
+          url={`${pathname}/audit?planId=${plan.id}`}
+          label="Continue Audit Plan"
+        />
       </CardFooter>
     </Card>
   );

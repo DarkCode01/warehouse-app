@@ -47,19 +47,20 @@ export default function Audit() {
 
   const getBinDetails = useCallback(async (defaultBinCode: string) => {
     toast.promise(() => binService.getBin(defaultBinCode), {
-      loading: 'Getting bin\'s details...',
+      loading: "Getting bin's details...",
       success: async (response) => {
         if (response.status === 200) {
           setBin(response.data);
-          
+
           // scroll into details
           const detailsElement = document.querySelector(`#bin-details`);
 
-          if (detailsElement) detailsElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'end'
-          });
+          if (detailsElement)
+            detailsElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+              inline: 'end',
+            });
         } else {
           throw new Error('Not found');
         }
@@ -76,37 +77,41 @@ export default function Audit() {
     });
   }, []);
 
-  const getPlanDetails = useCallback(async (defaultPlanId: string) => {
-    toast.promise(() => auditPlanService.getDetails(defaultPlanId), {
-      loading: 'Getting plan\'s tasks...',
-      success: async (response) => {
-        if (response.status === 200) {
-          setPlan(response.data);
+  const getPlanDetails = useCallback(
+    async (defaultPlanId: string) => {
+      toast.promise(() => auditPlanService.getDetails(defaultPlanId), {
+        loading: "Getting plan's tasks...",
+        success: async (response) => {
+          if (response.status === 200) {
+            setPlan(response.data);
 
-          // load the first task pending
-          const task = response.data.tasks.find(task => task.status === AuditTaskStatus.PENDING);
-          
-          if (task && !binCode) {
-            setBinCode(task.bin.code);
+            // load the first task pending
+            const task = response.data.tasks.find(
+              (task) => task.status === AuditTaskStatus.PENDING
+            );
 
-            getBinDetails(task.bin.code);
+            if (task && !binCode) {
+              setBinCode(task.bin.code);
+
+              getBinDetails(task.bin.code);
+            }
+          } else {
+            throw new Error('Not found');
+          }
+
+          return {
+            type: 'success',
+            message: 'Plan loaded!',
           };
-        } else {
-          throw new Error('Not found');
-        }
-
-        return {
-          type: 'success',
-          message: 'Plan loaded!',
-        };
-      },
-      error: () => ({
-        message: 'Plan not found',
-        description: 'Please check the code and try again.',
-      }),
-    });
-  }, [binCode, getBinDetails]);
-
+        },
+        error: () => ({
+          message: 'Plan not found',
+          description: 'Please check the code and try again.',
+        }),
+      });
+    },
+    [binCode, getBinDetails]
+  );
 
   useEffect(() => {
     const paramBinCode = params.get('binCode');
@@ -273,7 +278,7 @@ export default function Audit() {
                   </div>
                 )}
 
-                <DialogTrigger className="w-full">
+                <DialogTrigger className="w-full" asChild>
                   <Button type="button" size="full">
                     <Calculator /> Add Count
                   </Button>

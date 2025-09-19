@@ -1,3 +1,8 @@
+'use client';
+
+import { tour } from '@/lib/tour';
+import { Play } from 'lucide-react';
+import { Button } from '../ui/button';
 
 export const Header = () => {
   return (
@@ -12,8 +17,13 @@ export const Header = () => {
               Manage inventory and track warehouse operations
             </p>
           </div>
+
+          <Button onClick={() => tour.drive()}>
+            <Play />
+            Take a tour
+          </Button>
         </div>
       </div>
     </header>
   );
-}
+};

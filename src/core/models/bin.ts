@@ -1,7 +1,8 @@
-import { BaseModel } from "@/shared/types/base-model";
-import { Nullable } from "@/shared/types/common";
-import { AuditResultStatus, AuditTaskStatus } from "../enums/audit";
-import { Rack } from "./rack";
+import { BinActivityTypes } from '@/core/enums/bin-activity';
+import { BaseModel } from '@/shared/types/base-model';
+import { Nullable } from '@/shared/types/common';
+import { AuditResultStatus, AuditTaskStatus } from '../enums/audit';
+import { Rack } from './rack';
 
 export interface Bin extends BaseModel {
   code: string;
@@ -18,6 +19,13 @@ export interface Bin extends BaseModel {
   is_active: number;
 
   rack: Rack;
+}
+
+export interface BinActivity extends BaseModel {
+  bin_id: string;
+  type: BinActivityTypes;
+  quantity: number;
+  notes?: string;
 }
 
 export interface BinAuditRequest {

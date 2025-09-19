@@ -1,7 +1,7 @@
-export enum BinActivity {
-  PUTAWAY='PUTAWAY',
-  PICK='PICK',
-  MOVE='MOVE',
-  ADJUSTMENT='ADJUSTMENT',
-  AUDIT='AUDIT'
+export enum BinActivityTypes {
+  PUTAWAY = 'PUTAWAY',
+  PICK = 'PICK',
+  MOVE = 'MOVE',
+  ADJUSTMENT = 'ADJUSTMENT',
+  AUDIT = 'AUDIT',
 }

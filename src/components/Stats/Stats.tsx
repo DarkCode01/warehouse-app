@@ -23,12 +23,16 @@ export const Stats = ({ warehouseId }: Props) => {
   );
 
   return (
-    <div className="grid grid-cols-3 grid-rows-2 gap-2">
-      {stats.map((stat) => {
-        const label = getRiskLevel(stat.averageRiskScore)
+    <div className="grid grid-cols-3 grid-rows-2 gap-2" data-tour="stats">
+      {stats.map((stat, index) => {
+        const label = getRiskLevel(stat.averageRiskScore);
 
         return (
-          <Card key={stat.group} className="border shadow-xs bg-white p-0 rounded-lg card-elevated">
+          <Card
+            key={stat.group}
+            className="border shadow-xs bg-white p-0 rounded-lg card-elevated"
+            id={`stats-${index}`}
+          >
             <CardContent className="flex flex-col gap-4 p-3">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-bold text-gray-900">{stat.group}</p>

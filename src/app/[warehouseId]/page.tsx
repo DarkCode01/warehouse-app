@@ -51,22 +51,25 @@ export default function Home() {
   const [binCode, setBinCode] = useState<string>();
 
   return (
-    <div className="w-full max-w-7xl mx-auto h-full flex flex-col gap-4 p-6 overflow-y-auto">
+    <div className="w-full max-w-7xl mx-auto h-full flex flex-col gap-4 p-6 overflow-y-auto relative">
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2 flex flex-col gap-4">
-          <div className="flex items-center gap-2 p-2 bg-gray-100 rounded-md">
-            <Link href={`/${warehouseId}/plans`}>
+          <div
+            className="flex items-center gap-2 p-2 bg-gray-100 rounded-md"
+            id="navbar-menu"
+          >
+            <Link href={`/${warehouseId}/plans`} data-tour="create-plan">
               <Button variant="outline">
                 <Plus />
                 Create A Plan
               </Button>
             </Link>
-            <Link href={`/${warehouseId}/plans`}>
+            <Link href={`/${warehouseId}/plans`} data-tour="audit-plans">
               <Button variant="outline">
                 <ListCheck /> Audit Plans
               </Button>
             </Link>
-            <Link href={`/${warehouseId}/audit`}>
+            <Link href={`/${warehouseId}/audit`} data-tour="audit-bin">
               <Button variant="outline">
                 <CheckCheck />
                 Audit A Bin
@@ -89,9 +92,8 @@ export default function Home() {
         </div>
 
         <div className="flex-col flex gap-2">
-          <CurrentPlan warehouseId={warehouseId} />
-
           <Bin binCode={binCode} />
+          <CurrentPlan warehouseId={warehouseId} />
         </div>
       </div>
     </div>

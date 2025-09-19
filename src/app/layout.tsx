@@ -1,5 +1,6 @@
 import { Header } from '@/components/layouts/header';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import 'driver.js/dist/driver.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
@@ -28,11 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
       >
         <Toaster position="top-right" />
         <div className="flex h-screen">
-          <main className="w-full  bg-gray-100/20 overflow-x-auto">
+          <main className="w-full  bg-gray-100/20 overflow-x-auto h-full">
             <Header />
 
             <ScrollArea>{children}</ScrollArea>
